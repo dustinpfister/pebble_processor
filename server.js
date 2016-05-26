@@ -411,7 +411,7 @@ app.post('/signup', function (req, res, next) {
 // start the server
 app.listen(openShift.port, openShift.ipaddress, function () {
 
-    var taxloop;
+    var taxloop, pebbleProcess;
 
     console.log('server.js: pebble lives');
 
@@ -428,9 +428,20 @@ app.listen(openShift.port, openShift.ipaddress, function () {
 
                 // run pebblebars updater
                 require('./lib/pebblebar/updater.js').update();
-
+                
+            },
+                
+            pebbleProcess = function(){
+                
+                var t = setTimeout(pebbleProcess, 1000);
+                
+                console.log('processing transfer requests...');
+                
             };
+            
+            // start tax loop, and pebble process.
             taxLoop();
+            pebbleProcess();
 
         });
 
