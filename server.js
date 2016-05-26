@@ -435,7 +435,9 @@ app.listen(openShift.port, openShift.ipaddress, function () {
                 
                 var t = setTimeout(pebbleProcess, 1000);
                 
-                console.log('processing transfer requests...');
+                //console.log('processing transfer requests...');
+                
+                pebble.processNext();
                 
             };
             
