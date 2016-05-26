@@ -1,0 +1,6 @@
+{
+    
+    "pluginName" : "storage_getstorage",
+    "coreFiles" : ["responder"]
+    
+}

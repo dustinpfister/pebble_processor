@@ -1,0 +1,6 @@
+{
+    
+    "pluginName" : "shops_getshoppage",
+    "coreFiles" : ["responder"]
+    
+}

@@ -1,0 +1,6 @@
+{
+    
+    "pluginName" : "reserve_take",
+    "coreFiles" : ["responder"]
+    
+}

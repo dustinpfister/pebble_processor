@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <title>Pebble</title>
+    <meta charset="utf-8">
+    
+</head>
+
+<body>
+    
+    <h1>Pebble</h1>
+    
+    <form action="/login" method="post">
+        <div>
+            <label>Username:</label>
+            <input type="text" name="username" />
+            <br/>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" />
+        </div>
+        <div>
+            <input type="submit" value="Submit" />
+        </div>
+    </form>
+    <a href="/signup">sign up</a>
+
+    <% include ./parts/foot.ejs %>
+
+</body>
+
+</html>

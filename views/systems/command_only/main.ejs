@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<h1>Pebble_processor: Command Only Client System</h1>
+<p>To get started press ctrl + j in chrome, and make sure you are in the console section.</p>
+
+<h2>Some commands:</h2>
+
+<p>The following are some commands to help you get started.</p>
+
+<h2>login, and logout:</h2>
+
+<p>login, and logout via the console.</p>
+
+<pre>
+
+// login
+peb.login('username','password')
+
+// logout
+peb.logout()
+
+</pre>
+
+
+
+<h2>pebblebar: userData object:</h2>
+<p>to get basic account info try the basic pebblebar request.</p>
+<pre>
+
+// pebblebar basic response
+peb({action:'pebblebar'})
+
+</pre>
+<p>this will give you the userData object userData.wallet reflects how much pebble the logged in user has in there prime account.</p>
+
+
+
+<h2>pebblebar: invoking a plugin:</h2>
+<p>To invoke a plugin, use the clientData array with the pebblebar action.</p>
+<pre>
+
+// invoke pebblebar plugin 'reserve_info'
+peb({action:'pebblebar', clientData:[{plugin:'reserve_info'}]})
+
+</pre>
+<p>this will give you the standard response with the userData object as well as the response array that will contain the response to the reserve_info plugin invocation. You should see one element in the array, this is the response for reserve_info, inside you should see the reserve object that contains info on the reserve account including world total, and the current pebble balence for the reserve.</p>
+
+
+
+<h2>pebblebar: invoking more then one plugin per request.</h2>
+<p>You can invoke more then one plugin per request by simply adding an additional object to the clientData array.</p>
+<pre>
+
+// request reserve_info, and take a pebble from the reserve account.
+peb({action:'pebblebar', clientData:[{plugin:'reserve_info'},{plugin:'reserve_take',requested:1}]})
+
+</pre>
+<p>This should give you two objects in your response array for each plugin you invoked.</p>
+
+<h2>pebblebar: plugin list</h2>
+<p>Here is a complate list of plugins that respond to client requests.</p>
+
+<ul>
+    
+    <li><h3>Shops</h3><ul>
+        
+        
+        <li><h4>shops_buyitems</h4>
+        
+            <p>
+                Use this plugin to buy one or more items from a shop.
+            </p>
+            
+            <pre>
+// buy items from shop of id ''1464126130305''
+// and buy items of the item id's in the array.
+peb({
+    action:'pebblebar', 
+    clientData:[
+       {
+           plugin: 'shops_buyitems', 
+           shopId: '1464126130305', 
+           items : [
+               '5744cb967b38c814076cd1b2', 
+               '5744cbf07b38c814076cd1b5', 
+               '5744cc4a7b38c814076cd1b8'
+           ]
+        }
+    ]
+})
+            </pre>
+        
+        </li>
+        
+        <li><h4>shops_buyweight</h4>
+        
+            <p>
+                Buy weight for a shop of yours. weight is what is used to determin your ranking in the shop pages.
+                 So the heigher the weight of a shop the better. To buy weight you must know the shop id of the shop 
+                of yours that you want to buy weight for, you also will want to give an amount as well.
+                
+            </p>
+        
+            <pre>
+// buy 100 pebble worth of weight for your shop that has an id of '1464108248925'
+peb({action: 'pebblebar', clientData:[{plugin:'shops_buyweight', shopId: '1464108248925', amount: 100}]})
+            </pre>
+            
+        </li>
+        
+        <li><h4>shops_getshoppage</h4>
+        
+            <p>
+                Get a page of user shops. By default this will get the three highest ranking shops. 
+                if this is not what you want use the shopsPerPage, and pageNumber properties. Where 
+                shopsPerPage will set the number of shops you want per page, and pageNumber is the 
+                page that you want relative to the shopsPerPage count.
+            </p>
+            
+            <pre>
+// get shop page #0 (top page containg shops with heighest weight ratings)
+peb({action:'pebblebar', clientData:[{plugin:'shops_getshoppage'}]})
+
+// get shop page #1
+peb({action:'pebblebar', clientData:[{plugin:'shops_getshoppage', pageNumber: 1}]})
+
+// get shop page #3, when having 2 shops per page
+peb({action:'pebblebar', clientData:[{plugin:'shops_getshoppage', shopsPerPage: 2, pageNumber: 3}]})
+
+            </pre>
+            
+        </li>
+        
+        <li><h4>shops_getusershops</h4>
+        
+            <p>
+                get the shops that you own.
+            </p>
+        
+            <pre>
+// shops_getusershops: get a list of data on shops that you own.
+peb({action:'pebblebar', clientData:[{plugin:'shops_getusershops'}]})
+            </pre>
+        
+        </li>
+        
+        <li><h4>shops_newshop</h4>
+        
+            <p>
+                Call this plugin to start a new shop.
+            </p>
+        
+            <pre>
+// start a new shop         
+peb({action:'pebblebar', clientData:[{plugin:'shops_newshop', newShop:true}]})
+            </pre>
+            
+        </li>
+    
+    </ul></li>
+    
+</ul>
+
+<h2>give action: give pebble back to the reserve, or to another user.</h2>
+<p>the give action can be used to give pebble to another account, including the reserve.</p>
+<pre>
+
+// give 10 pebble back to the reserve account.
+peb({action:'give', giveTo:'reserve', amount:10})
+
+// give 42 pebble to the user account 'billy'
+peb({action:'give',giveTo:'username',username:'billy',amount:42})
+
+</pre>
+
+
+
+<h2>grant action: request a grant from the reserve.</h2>
+<p>the grant action can be used to take a large sum of pebble dirrectly from the reserve.</p>
+<pre>
+
+// give 10 pebble back to the reserve account.
+peb({action:'grant', amount:100})
+
+</pre>
+
+<!--
+<h2>plugin list:</h2>
+<p>the following is a list of plugins and useage examples.</p>
+
+<pre>
+
+// reserve_info
+peb({action:'pebblebar', clientData:[{plugin:'reserve_info'}]})
+
+//reserve_take
+peb({action:'pebblebar', clientData:[{plugin:'reserve_take',requested:1}]})
+
+// shops_buyitemscheck: buy an item from a shop.
+
+// shops_buyweight: buy weight for a shop of yours (promote it).
+
+// shops_getshoppage: get a page of shops.
+
+// shops_getusershops: get a list of data on shops that you own.
+peb({action:'pebblebar', clientData:[{plugin:'shops_getusershops'}]})
+
+// shops_newshopcheck: start a new shop
+peb({action:'pebblebar', clientData:[{plugin:'shops_newshopcheck', newShop:true}]})
+
+// storage_getstorage: check out what you have in storage
+peb({action:'pebblebar', clientData:[{plugin:'storage_getstorage'}]})
+
+// storage_outgoing: give an item to another user
+
+// storage_drop: trash an item in storage that you do not want
+
+// user_checkin: let the server know you are checking in.
+peb({action:'pebblebar', clientData:[{plugin:'user_checkin'}]})
+
+</pre>
+
+-->
+
+<% include ./parts/foot.ejs %>
