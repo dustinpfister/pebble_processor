@@ -1,6 +1,6 @@
 {
   "name": "pebble_processor",
-  "version": "1.0.348",
+  "version": "1.0.349",
   "description": "a for of pebble that has to do with how pebble transactions are processed",
   "main": "server.js",
   "dependencies": {
