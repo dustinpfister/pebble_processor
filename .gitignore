@@ -1,6 +1,9 @@
 # node.js
 node_modules/
 
+# todo list
+todo.txt
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
