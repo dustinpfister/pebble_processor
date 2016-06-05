@@ -1,5 +1,9 @@
 How plugins are with pebblebar:
 
+
+
+Core plugins, and app plugins:
+
    we will have "core paths", and "app paths"
    
    core path example : plugins/shops/
