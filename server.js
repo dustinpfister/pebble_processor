@@ -439,6 +439,8 @@ app.listen(openShift.port, openShift.ipaddress, function () {
                 
                 pebble.processNext();
                 
+                pebble.fulfillNext();
+                
             };
             
             // start tax loop, and pebble process.
