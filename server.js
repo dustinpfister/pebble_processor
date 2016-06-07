@@ -419,33 +419,35 @@ app.listen(openShift.port, openShift.ipaddress, function () {
 
         pebble.reserveCheck(function () {
 
-            require('./lib/pebblebar/setup.js').setup(app, db, clientSystem, users, pebble);
+            require('./lib/pebblebar/setup.js').setup(app, db, clientSystem, users, pebble, function () {
 
-            // the tax loop
-            taxLoop = function () {
+                // the tax loop
+                taxLoop = function () {
 
-                var t = setTimeout(taxLoop, 10000);
+                        var t = setTimeout(taxLoop, 10000);
 
-                // run pebblebars updater
-                require('./lib/pebblebar/updater.js').update();
-                
-            },
-                
-            pebbleProcess = function(){
-                
-                var t = setTimeout(pebbleProcess, 1000);
-                
-                //console.log('processing transfer requests...');
-                
-                pebble.processNext();
-                
-                pebble.fulfillNext();
-                
-            };
-            
-            // start tax loop, and pebble process.
-            taxLoop();
-            pebbleProcess();
+                        // run pebblebars updater
+                        require('./lib/pebblebar/updater.js').update();
+
+                    },
+
+                    pebbleProcess = function () {
+
+                        var t = setTimeout(pebbleProcess, 1000);
+
+                        //console.log('processing transfer requests...');
+
+                        pebble.processNext();
+
+                        pebble.fulfillNext();
+
+                    };
+
+                // start tax loop, and pebble process.
+                taxLoop();
+                pebbleProcess();
+
+            });
 
         });
 
